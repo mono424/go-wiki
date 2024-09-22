@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/trietmn/go-wiki/cache"
-	"github.com/trietmn/go-wiki/page"
-	"github.com/trietmn/go-wiki/utils"
+	"github.com/mono424/go-wiki/cache"
+	"github.com/mono424/go-wiki/page"
+	"github.com/mono424/go-wiki/utils"
 )
 
 /*

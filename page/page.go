@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/anaskhan96/soup"
-	"github.com/trietmn/go-wiki/models"
-	"github.com/trietmn/go-wiki/utils"
+	"github.com/mono424/go-wiki/models"
+	"github.com/mono424/go-wiki/utils"
 
 	"reflect"
 	"strconv"
