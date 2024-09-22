@@ -1,4 +1,4 @@
-module github.com/trietmn/go-wiki
+module github.com/mono424/go-wiki
 
 go 1.18
 
