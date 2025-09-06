@@ -218,9 +218,6 @@ func (page *WikipediaPage) ContinuedQuery(args map[string]string) ([]interface{}
 	return result, nil
 }
 
-/*
-Based on <https://www.mediawiki.org/wiki/API:Query#Continuing_queries>
-*/
 func (page *WikipediaPage) CustomRequest(args map[string]string) ([]byte, error) {
 	args["titles"] = page.Title
 	return utils.WikiRequesterRaw(args)
@@ -283,8 +280,11 @@ func (page *WikipediaPage) GetCoordinate() ([]float64, error) {
 		page.Coordinate = []float64{-1, -1}
 		return page.Coordinate, nil
 	} else {
-		temp := res.Query.Page[strconv.Itoa(page.PageID)].Coordinate[0]
-		page.Coordinate = []float64{temp["lat"].(float64), temp["lon"].(float64)}
+		temp := res.Query.Page[strconv.Itoa(page.PageID)].Coordinate
+		if len(temp) == 0 {
+			return []float64{}, nil
+		}
+		page.Coordinate = []float64{temp[0]["lat"].(float64), temp[0]["lon"].(float64)}
 	}
 	return page.Coordinate, nil
 }
@@ -410,11 +410,12 @@ func (page *WikipediaPage) GetSection(section string) (string, error) {
 		page.SectionOffset[section] = []int{0, 0}
 		return "", nil
 	}
-	end := start + strings.Index(content[start:], "==")
+	end := strings.Index(content[start:], "==")
 	if end == -1 {
 		page.SectionOffset[section] = []int{start, len(content)}
 		return content[start:], nil
 	}
+	end += start
 	page.SectionOffset[section] = []int{start, end}
 	return strings.TrimSpace(strings.TrimLeft(content[start:end], "=")), nil
 }
